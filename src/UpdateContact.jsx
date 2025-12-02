@@ -15,7 +15,7 @@ export default function UpdateContact() {
     useEffect(() => {
         const fetchContacts = async () => {
             try {
-                const response = await fetch("http://localhost:8081/contacts");
+                const response = await fetch("https://cs3870-backend-p3an.onrender.com/contacts");
                 if (!response.ok) {
                     throw new Error("Failed to fetch contacts");
                 }
@@ -58,7 +58,7 @@ export default function UpdateContact() {
 
         try {
             const encodedName = encodeURIComponent(selectedContactName);
-            const res = await fetch(`http://localhost:8081/contacts/${encodedName}`, {
+            const res = await fetch(`https://cs3870-backend-p3an.onrender.com/contacts/${encodedName}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(contactDetails),
