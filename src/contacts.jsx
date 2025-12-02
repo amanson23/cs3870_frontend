@@ -1,45 +1,29 @@
 import { useState, useEffect } from 'react';
-import API_URL from './apiConfig';
-
 const Contacts = () => {
     const [contacts, setContacts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     
     useEffect(() => {
         const fetchContacts = async () => {
             try {
-                setError(null);
-                setLoading(true);
-                const response = await fetch(`${API_URL}/contacts`);
+                const response = await fetch("https://cs3870-backend-p3an.onrender.com/contacts");
                 if (!response.ok) {
                     throw new Error("Failed to fetch contacts");
                 }
                 const data = await response.json();
                 setContacts(data);
             } catch (error) {
-                setError("There was an Error loading contacts: " + error.message);
-            } finally {
-                setLoading(false);
+                alert("There was an Error loading contacts " + error.message);
             }
         };
         fetchContacts();
     }, []);
-
-    if (loading) {
-        return <p>Loading contacts...</p>;
-    }
-
-    if (error) {
-        return <p style={{ color: 'red' }}>{error}</p>;
-    }
 
     return (
         <div className="container">
             <h2 className="text-center mt-4">Contacts List</h2>
             <ul className="list-group">
                 {contacts.map((contact) => (
-                    <li key={contact._id} className="list-group-item d-flex align-items-center">
+                    <li key={contact.id} className="list-group-item d-flex align-items-center">
                         {contact.image_url && (
                             <img
                                 src={contact.image_url}
